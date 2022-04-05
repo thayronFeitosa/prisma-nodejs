@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  pgsql_service:
+    build:
+      context: .
+    environment:
+      - POSTGRES_USER=${DB_PGSQL_USER?Please set DB_PGSQL_USER in .env file}
+      - POSTGRES_PASSWORD=${DB_PGSQL_PASSWORD?Please set DB_PGSQL_PASSWORD in
+        .env file}
+      - POSTGRES_DB=${DB_PGSQL_DB_NAME?Please set DB_PGSQL_DB_NAME in .env file}
+      - POSTGRES_PORT=${DB_PGSQL_PORT?Please set DB_PGSQL_PORT in .env file}
+    tty: true
+    restart: always
+    volumes:
+      - .docker/storage/volumes/pgsql/:/var/lib/postgresql/data/
+    networks:
+      application_internal_network:
+        ipv4_address: '${DOCKER_PGSQL_SERVER_IPV4}'
+
+networks:
+  application_internal_network:
+    name: '${DOCKER_NETWORK_NAME}'
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: '${DOCKER_NETWORK_SUBNET}'

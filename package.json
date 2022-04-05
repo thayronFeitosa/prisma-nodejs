@@ -1,5 +1,13 @@
 {
   "dependencies": {
+    "@prisma/client": "^3.11.1",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.4"
+  },
+  "devDependencies": {
     "prisma": "^3.11.1"
+  },
+  "scripts": {
+    "start-db": "cd ./psql && docker-compose up -d"
   }
 }
