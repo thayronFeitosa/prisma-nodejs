@@ -1,41 +1,59 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Courses {
-    id          String     @id @default(uuid())
-    name        String     @unique
-    description String?
-    duration    Int
-    created_at  DateTime   @default(now())
-    Teachers    Teachers[]
+  id          String     @id @default(uuid())
+  name        String     @unique
+  description String?
+  duration    Int
+  created_at  DateTime   @default(now())
+  Teachers    Teachers[]
 
-    @@map("courses")
+  @@map("courses")
 }
 
 model Modules {
-    id            String   @id @default(uuid())
-    name          String   @unique
-    description   String
-    created_at    DateTime @default(now())
-    teacher       Teachers @relation(fields: [teachersId], references: [id])
-    fk_id_teacher String
-    teachersId    String
+  id            String   @id @default(uuid())
+  name          String   @unique
+  description   String
+  created_at    DateTime @default(now())
+  teacher       Teachers @relation(fields: [teachersId], references: [id])
+  fk_id_teacher String
+  teachersId    String
 
-    @@map("modules")
+  @@map("modules")
 }
 
 model Teachers {
-    id        String    @id @default(uuid())
-    name      String    @unique
-    course    Courses?  @relation(fields: [coursesId], references: [id])
-    Modules   Modules[]
-    coursesId String?
+  id        String    @id @default(uuid())
+  name      String    @unique
+  course    Courses?  @relation(fields: [coursesId], references: [id])
+  Modules   Modules[]
+  coursesId String?
 
-    @@map("teachers")
+  @@map("teachers")
+}
+
+model Authors {
+  id   String @id @default(uuid())
+  name String @unique
+
+  @@map("authors")
+  books Books[]
+}
+
+model Books {
+  id        String  @id @default(uuid())
+  name      String  @unique
+  author_id String
+  author    Authors @relation(fields: [author_id], references: [id])
+
+
+  @@map("books")
 }
