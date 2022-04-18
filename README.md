@@ -19,3 +19,5 @@ e depoisa
 yarn prisma db push
 ```
 
+## Diagrama
+![images](./src/img/many_to_many.png)

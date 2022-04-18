@@ -1,27 +1,17 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 async function main() {
-    const result = await prisma.courses.create({
-        data: {
-            name: 'curso de java',
-            duration: 500,
-            description: 'curso de java 8',
-            Teachers: {
-                connectOrCreate: {
-                    where: {
-                        name: 'thayron matos'
-                    },
-                    create: {
-                        name: 'thayron matos'
-                    }
-                }
-            }
+  const result = await prisma.courses.create({
+    data: {
+      duration: 300,
+      name: "Curso de React Native",
+      description: "Curso excelente de React Native com Rodrigão",
+    },
+  });
 
-        }
-    });
-    console.log(result);
+  console.log(result);
 }
 
 main();
